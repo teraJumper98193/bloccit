@@ -1,3 +1,4 @@
 class Topic < ActiveRecord::Base
-  has_many :posts, dependent: :destroy
+  belongs_to :SponsoredPost
+  has_many :comments, dependent: :destroy
 end
