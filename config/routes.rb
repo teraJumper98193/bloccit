@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :topics do
- # #34
+
      resources :posts, except: [:index]
    end
 
@@ -10,5 +10,11 @@ Rails.application.routes.draw do
    get 'about' => 'welcome#about'
 
    root 'welcome#index'
+
+ end
+
+   resources :posts [:new]
+
+   root 'users#confirm'
 
  end
