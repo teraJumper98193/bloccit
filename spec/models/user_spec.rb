@@ -27,10 +27,15 @@ RSpec.describe User, type: :model do
       expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
     end
 
+
     # #1
     it "responds to role" do
       expect(user).to respond_to(:role)
     end
+
+    it "responds to moderator?" do
+       expect(user).to respond_to(:moderator?)
+     end
 
     # #2
     it "responds to admin?" do
@@ -74,6 +79,20 @@ describe "roles" do
       expect(user.admin?).to be_truthy
     end
   end
+
+  context "moderator user" do
+   before do
+     user.moderator!
+   end
+
+   it "returns false for #member?" do
+     expect(user.member?).to be_falsey
+   end
+
+   it "returns true for #moderator?" do
+     expect(user.moderator?).to be_truthy
+   end
+ end
 end
 
 
