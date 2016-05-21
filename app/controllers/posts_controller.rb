@@ -21,6 +21,7 @@ class PostsController < ApplicationController
     @post.user = current_user
 
     if @post.save
+      @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Post was saved successfully."
 # #36
 
@@ -40,6 +41,7 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
+      @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Post was updated successfully."
 # #37
 
