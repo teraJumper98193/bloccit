@@ -68,6 +68,10 @@ class PostsController < ApplicationController
 
   private
 
+  def comment_params
+    params.require(:comment).permit(:body)
+  end
+
  def post_params
    params.require(:post).permit(:title, :body)
  end

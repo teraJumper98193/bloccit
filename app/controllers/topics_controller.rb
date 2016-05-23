@@ -21,6 +21,18 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
+    comment = @topic.comments.new(comment_params)
+    comment.user = current_user
+
+    if comment.save
+      flash[:notice] = "Comment saved successfully."
+# #12
+      redirect_to [@topic.topic, @topic]
+    else
+      flash[:alert] = "Comment failed to save."
+# #13
+      redirect_to [@topic.topic, @topic]
+    end
 
    if @topic.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
@@ -54,6 +66,15 @@ class TopicsController < ApplicationController
 
   def destroy
   @topic = Topic.find(params[:id])
+  comment = @topic.comments.find(params[:id])
+
+  if comment.destroy
+    flash[:notice] = "Comment was deleted successfully."
+    redirect_to [@post.topic, @post]
+  else
+    flash[:alert] = "Comment couldn't be deleted. Try again."
+    redirect_to [@post.topic, @post]
+  end
 
   if @topic.destroy
     flash[:notice] = "\"#{@topic.name}\" was deleted successfully."
@@ -65,6 +86,10 @@ class TopicsController < ApplicationController
 end
 
  private
+
+ def comment_params
+   params.require(:comment).permit(:body)
+ end
 
  def topic_params
   params.require(:topic).permit(:name, :description, :public)
