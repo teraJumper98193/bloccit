@@ -23,3 +23,12 @@
 
 <h2>Comments</h2>
 <%= render @user.comments %>
+
+<% if @user.favorites.any? %>
+    <uL> <% @user.favorites.each do |f| %>
+       <li> <<%= f.post.title %>
+          <%= image_tag(f.post.user.avatar_url(48), class: "gravatar") %>
+           <%= f.post.points %>
+          </li>
+        </ul>
+    <% end %>
